@@ -45,7 +45,6 @@ function readdir#Selected()
 endfunction
 
 function readdir#Show(path, focus)
-	silent lchdir `=a:path`
 	call s:set_bufname(printf('(%d) %s', b:readdir.id, a:path))
 
 	let path = fnamemodify(a:path, ':p') " ensure trailing slash
@@ -68,24 +67,9 @@ endfunction
 function readdir#Open(path)
 	if isdirectory(a:path) | return a:path == b:readdir.cwd || readdir#Show( a:path, b:readdir.cwd ) | endif
 
-	if s:set_bufname(a:path)
-		unlet b:readdir
-		set modifiable< buftype< filetype< noswapfile< wrap<
-		mapclear <buffer>
-
-		" HACK: because :file sets not-edited (:help not-edited) but :edit won't clear it
-		autocmd ReadDir BufWriteCmd <buffer> exe
-		write!
-
-		" reset &undolevels after :edit (avoid undo step) but before ftplugins (avoid overriding them)
-		autocmd ReadDir BufReadPre <buffer> exe 'set undolevels<' | autocmd! ReadDir * <buffer>
-
-		go | edit!
-	else " file already open in another buffer, just switch
-		let me = bufnr('%')
-		edit `=a:path`
-		exe 'silent! bwipeout!' me
-	endif
+	let me = bufnr('%')
+	edit `=a:path`
+	exe 'silent! bwipeout!' me
 endfunction
 
 function readdir#CycleHidden()
