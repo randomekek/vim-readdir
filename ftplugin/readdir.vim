@@ -34,7 +34,7 @@ let taken = map(copy(id),'getbufvar(v:val,"readdir_id")')
 let b:readdir = { 'id': filter(id,'index(taken,v:val) < 0')[0] }
 let b:readdir.hidden = get(g:, 'readdir_hidden', 0)
 
-setlocal buftype=nofile noswapfile undolevels=-1 nomodifiable nowrap
+setlocal buftype=nofile nomodifiable nowrap
 call readdir#Show( simplify( expand('%:p').'.' ), '' )
 
 nnoremap <buffer> <silent> <CR> :call readdir#Open( readdir#Selected() )<CR>
