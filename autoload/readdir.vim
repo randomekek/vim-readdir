@@ -77,4 +77,15 @@ function readdir#CycleHidden()
 	call readdir#Show( b:readdir.cwd, readdir#Selected() )
 endfunction
 
+function readdir#NewFile()
+        let filename = input('new file: ')
+
+        if filename != ''
+          let me = bufnr('%')
+          let path = b:readdir.cwd . '/' . filename
+          exe 'edit' path
+          exe 'silent! bwipeout!' me
+        endif
+endfunction
+
 " vim:foldmethod=marker

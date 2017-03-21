@@ -42,5 +42,6 @@ nnoremap <buffer> <silent> o    :edit `=readdir#Selected()`<CR>
 nnoremap <buffer> <silent> t    :tabedit `=readdir#Selected()`<CR>
 nnoremap <buffer> <silent> -    :call readdir#Open( b:readdir.content[0] )<CR>
 nnoremap <buffer> <silent> a    :call readdir#CycleHidden()<CR>
+nnoremap <buffer> <silent> %    :call readdir#NewFile()<CR>
 
 " vim:foldmethod=marker
